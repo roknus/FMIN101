@@ -11,6 +11,14 @@ public class Substitution
 		couples = new ArrayList<CoupleTerms>();
 	}
 
+	public Substitution(Substitution s) {
+		this.couples = new ArrayList<CoupleTerms>();
+		for(CoupleTerms ct : s.getCouples())
+		{
+			this.couples.add(ct);
+		}
+	}
+
 	public ArrayList<CoupleTerms> getCouples() {
 		return couples;
 	}
@@ -22,5 +30,15 @@ public class Substitution
 	public void addCouples(CoupleTerms cp)
 	{
 		this.couples.add(cp);
+	}
+	
+	public String toString()
+	{
+		String str = "{";
+		for(CoupleTerms c : couples)
+		{
+			str += c + ",";
+		}
+		return str+"}";
 	}
 }

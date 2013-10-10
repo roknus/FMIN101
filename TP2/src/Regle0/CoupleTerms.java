@@ -25,4 +25,9 @@ public class CoupleTerms {
 	public void setConstant(Term constant) {
 		this.constant = constant;
 	}	
+	
+	public String toString()
+	{
+		return "("+variable+","+constant+")";
+	}
 }

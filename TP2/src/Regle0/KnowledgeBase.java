@@ -60,7 +60,7 @@ public class KnowledgeBase {
 	}
 	
 	public void ForwardChaining(){
-		ArrayList<Atom> Atraiter = new ArrayList(fb.getAtoms());
+		ArrayList<Atom> Atraiter = new ArrayList<Atom>(fb.getAtoms());
 		
 		int[] compteur = new int[rb.size()];
 		
@@ -99,24 +99,37 @@ public class KnowledgeBase {
 	
 	public void instanciation()
 	{
+		boolean add = true;
 		ArrayList<Term> constants = new ArrayList<Term>(fb.getTerms());
 		for(Rule r : rb.getRules())
 		{
 			for(Term t : r.getTerms())
 			{
-				if(t.isConstant() && !constants.contains(t))
+				if(t.isConstant())
 				{
-					constants.add(t);
+					add = true;
+					for(int i=0;i<constants.size();i++)
+					{
+						if( t.equalsT(constants.get(i)) )
+						{ 
+							add = false;
+						}
+					}
+					if(add)
+					{
+						constants.add(t);
+					}
 				}
 			}
 		}
-		KnowledgeBase newKb = new KnowledgeBase();
-		newKb.setFb(fb);
-		ArrayList<Rule> rb = new ArrayList<Rule>();
+
 		for(Rule r : rb.getRules())
 		{
-			
-			
+
+			Substitutions s = new Substitutions(constants,r.getTerms());
+			s.generateAllSubstitutions();
+			System.out.println(r);
+			System.out.println(s);
 		}
 		
 		

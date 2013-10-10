@@ -19,8 +19,9 @@ public class Application0 {
 		// cretion de la base de connaissance
 		KnowledgeBase kb = new KnowledgeBase("animal.txt");
 		System.out.println(kb);
+		kb.instanciation();
 		
-		kb.ForwardChaining();
-		System.out.println(kb);
+		//kb.ForwardChaining();
+		//System.out.println(kb);
 	}
 }
