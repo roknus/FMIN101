@@ -6,6 +6,16 @@ public class Atom
 	private String predicate; // le predicat (ou le symbole propositionnel) de l'atome
 	private ArrayList<Term> args; //la liste de termes de cet atome (vide si il s'agit d'un atome reduit a un symbole propositionnel)
 		
+	public Atom(Atom a)
+	{
+		this.predicate = a.getPredicate();
+		args = new ArrayList<Term>();
+		for(Term t : a.getArgs())
+		{
+			args.add(t);
+		}
+	}
+	
 	/**
 	 * Constructeur de la classe Atome
 	 * Cree un atome, avec ou sans termes
@@ -74,6 +84,11 @@ public class Atom
 	public int getArity()
 	{
 		return args.size();
+	}
+	
+	public ArrayList<Term> getArgs()
+	{
+		return args;
 	}
 		
 	/**

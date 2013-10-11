@@ -35,6 +35,27 @@ public class Rule
 		hypothesis.remove(hypothesis.size()-1);
 	}
 	
+	public Rule(Rule r)
+	{
+		this.conclusion = new Atom(r.getConclusion());
+		this.hypothesis = new ArrayList<Atom>();
+		for(Atom a : r.getHypothesis())
+		{
+			Atom a2 = new Atom(a);
+			this.hypothesis.add(a2);
+		}
+		this.terms = new ArrayList<Term>();
+		for(Term t : r.getTerms())
+		{
+			this.terms.add(t);
+		}
+	}
+	
+	public void setConclusion(Atom a)
+	{
+		this.conclusion = a;
+	}
+	
 	/**
 	 * Ajoute un terme a la liste des termes s'il n'existe pas deja.
 	 * @param t le terme a potentiellement ajouter

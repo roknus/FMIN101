@@ -20,8 +20,10 @@ public class Application0 {
 		KnowledgeBase kb = new KnowledgeBase("animal.txt");
 		System.out.println(kb);
 		kb.instanciation();
-		
+		//kb.turnIntoOrder0();		
 		//kb.ForwardChaining();
 		//System.out.println(kb);
+		kb.FC_Order1();
+		System.out.println(kb);
 	}
 }

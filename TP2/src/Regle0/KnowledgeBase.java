@@ -122,16 +122,100 @@ public class KnowledgeBase {
 				}
 			}
 		}
-
+		RuleBase newRb = new RuleBase();
 		for(Rule r : rb.getRules())
 		{
-
 			Substitutions s = new Substitutions(constants,r.getTerms());
 			s.generateAllSubstitutions();
 			System.out.println(r);
 			System.out.println(s);
+			for(Substitution sub : s.getSubstitutions())
+			{
+				Rule newR = new Rule(r);
+				instanciationRegle(newR,sub);
+				newRb.addRule(newR);
+			}
 		}
-		
-		
+		rb = newRb;
+	}
+	
+	private void instanciationRegle(Rule r, Substitution s)
+	{
+		for(int i = 0; i < r.getTerms().size() ; i++)
+		{// Remplace les termes par des constantes
+			Term t = r.getTerms().get(i);
+			if( r.getTerms().get(i).isVariable() )
+			{
+				r.getTerms().set(i, s.getTerm(t));				
+			}
+		}
+		for(Atom a : r.getHypothesis())
+		{// Remplace les hypothese par des constantes
+			for(int i = 0; i < a.getArity() ; i++)
+			{
+				
+				if(a.getArgI(i).isVariable() )
+				{
+					a.setArgI(i, s.getTerm(a.getArgI(i)));
+				}
+			} 
+		}
+		for(int i = 0 ; i < r.getConclusion().getArity(); i ++)
+		{// Remplace la conclusion par des constantes
+			if( r.getConclusion().getArgI(i).isVariable())
+			{
+				r.getConclusion().setArgI(i, s.getTerm(r.getConclusion().getArgI(i)));
+			}
+		}
+	}
+	
+	public void turnIntoOrder0()
+	{
+		for(Rule r : rb.getRules())
+		{
+			for(int i = 0; i < r.getHypothesis().size() ; i++)
+			{				
+				String str = r.getAtomHyp(i).getPredicate();
+				for(Term t : r.getAtomHyp(i).getArgs())
+				{
+					str = str+"-"+t.getLabel();
+				}
+				r.getHypothesis().set(i, new Atom(str));
+			}
+			String str = r.getConclusion().getPredicate();
+			for(Term t : r.getConclusion().getArgs())
+			{
+				str = str+"-"+t.getLabel();
+			}
+			r.setConclusion(new Atom(str));
+		}
+		for(int i = 0; i < fb.getAtoms().size(); i++)
+		{
+			String str = fb.getAtoms().get(i).getPredicate();
+			for(Term t : fb.getAtoms().get(i).getArgs())
+			{
+				str = str+"-"+t.getLabel();
+			}
+			fb.getAtoms().set(i, new Atom(str));
+		}
+		FactBase newFb = new FactBase();
+		newFb.addAtoms(fb.getAtoms());
+		fb = newFb;
+	}
+	
+	public void FC_Order1()
+	{
+		this.turnIntoOrder0();
+		this.ForwardChaining();
+		FactBase newFb = new FactBase();
+		for(int i = 0; i < fb.getAtoms().size(); i++)
+		{
+			String str = fb.getAtoms().get(i).getPredicate();
+			str = str.replaceFirst("-", "('");
+			str = str.replace("-", "','");
+			str = str+"')";
+			newFb.addAtom(new Atom(str));
+		}
+		fb = newFb;
 	}
 }

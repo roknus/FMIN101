@@ -13,7 +13,8 @@ public class Term
 	public Term(String n, boolean c)
 	{
 		label = n;
-		constant = c;	}
+		constant = c;	
+	}
 		
 	/**
 	 * Indique si le terme est une constante
