@@ -169,39 +169,39 @@ public class KnowledgeBase {
 		}
 	}
 	
-//	public void turnIntoOrder0()
-//	{
-//		for(Rule r : rb.getRules())
-//		{
-//			for(int i = 0; i < r.getHypothesis().size() ; i++)
-//			{				
-//				String str = r.getAtomHyp(i).getPredicate();
-//				for(Term t : r.getAtomHyp(i).getArgs())
-//				{
-//					str = str+"-"+t.getLabel();
-//				}
-//				r.getHypothesis().set(i, new Atom(str));
-//			}
-//			String str = r.getConclusion().getPredicate();
-//			for(Term t : r.getConclusion().getArgs())
-//			{
-//				str = str+"-"+t.getLabel();
-//			}
-//			r.setConclusion(new Atom(str));
-//		}
-//		for(int i = 0; i < fb.getAtoms().size(); i++)
-//		{
-//			String str = fb.getAtoms().get(i).getPredicate();
-//			for(Term t : fb.getAtoms().get(i).getArgs())
-//			{
-//				str = str+"-"+t.getLabel();
-//			}
-//			fb.getAtoms().set(i, new Atom(str));
-//		}
-//		FactBase newFb = new FactBase();
-//		newFb.addAtoms(fb.getAtoms());
-//		fb = newFb;
-//	}
+	public void turnIntoOrder0()
+	{
+		for(Rule r : rb.getRules())
+		{
+			for(int i = 0; i < r.getHypothesis().size() ; i++)
+			{				
+				String str = r.getAtomHyp(i).getPredicate();
+				for(Term t : r.getAtomHyp(i).getArgs())
+				{
+					str = str+"-"+t.getLabel();
+				}
+				r.getHypothesis().set(i, new Atom(str));
+			}
+			String str = r.getConclusion().getPredicate();
+			for(Term t : r.getConclusion().getArgs())
+			{
+				str = str+"-"+t.getLabel();
+			}
+			r.setConclusion(new Atom(str));
+		}
+		for(int i = 0; i < fb.getAtoms().size(); i++)
+		{
+			String str = fb.getAtoms().get(i).getPredicate();
+			for(Term t : fb.getAtoms().get(i).getArgs())
+			{
+				str = str+"-"+t.getLabel();
+			}
+			fb.getAtoms().set(i, new Atom(str));
+		}
+		FactBase newFb = new FactBase();
+		newFb.addAtoms(fb.getAtoms());
+		fb = newFb;
+	}
 	
 	public void FC_Order1()
 	{

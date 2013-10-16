@@ -16,9 +16,13 @@ public class Application0 {
 		br.addRule(new Rule("A;B;C"));
 		System.out.println("Base de regles :\n"+br);
 		*/
-		// creation de la base de connaissance
+		// cretion de la base de connaissance
 		KnowledgeBase kb = new KnowledgeBase("animal.txt");
 		System.out.println(kb);
+		kb.instanciation();
+		//kb.turnIntoOrder0();		
+		//kb.ForwardChaining();
+		//System.out.println(kb);
 		kb.FC_Order1();
 		System.out.println(kb);
 	}
