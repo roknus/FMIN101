@@ -69,6 +69,69 @@ public class Atom
    		}
 	}
 	
+	public boolean isUnifiable(Atom a)
+	{
+		
+		if(a.getPredicate().equals(this.getPredicate()) && a.getArity() == this.getArity())
+		{
+			Atom a1 = new Atom(this);
+			Atom a2 = new Atom(a);
+			for(int i = 0 ; i < a1.getArgs().size() ; i++)
+			{			
+				System.out.println(a1);
+				System.out.println(a2);
+				if(a1.getArgI(i).isConstant() && a2.getArgI(i).isConstant())
+				{
+					if(!a1.getArgI(i).equalsT(a2.getArgI(i)))
+					{	
+						return false;
+					}
+				}
+				else
+				{
+					if(a1.getArgI(i).isConstant())
+					{
+						for(Term t : a2.getArgs())
+						{
+							if(t.equalsT(a2.getArgI(i)))
+							{
+								t = a2.getArgI(i);
+							}
+						}
+						a2.getArgI(i).setLabel(a2.getArgI(i).getLabel());
+					}
+					else if(a2.getArgI(i).isConstant())
+					{
+						for(Term t : a1.getArgs())
+						{
+							if(t.equalsT(a1.getArgI(i)))
+							{
+								t = a1.getArgI(i);
+							}
+						}
+						a1.getArgI(i).setLabel(a2.getArgI(i).getLabel());
+					}
+					else
+					{
+						for(Term t : a1.getArgs())
+						{
+							if(t.equalsT(a1.getArgI(i)))
+							{
+								t = a1.getArgI(i);
+							}
+						}
+						a1.getArgI(i).setLabel(a2.getArgI(i).getLabel());
+					}
+				}
+			}
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
 	/**
 	 * Ajoute le terme 't' a la liste de termes de l'atome, sans autre verification
 	 * @param t le terme a ajouter

@@ -43,6 +43,11 @@ public class Term
 	{
 		return label;
 	}
+	
+	public void setLabel(String str)
+	{
+		this.label = str;
+	}
 
 	
 	/**

@@ -61,7 +61,6 @@ public class Substitutions
 	
 	public void generateAllSubstitutions()
 	{
-		//System.out.println(constants+" "+variables);
 		Substitution s = new Substitution();
 		generateRec(s,0,0);
 	}
