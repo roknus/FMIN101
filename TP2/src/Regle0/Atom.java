@@ -76,10 +76,38 @@ public class Atom
 		{
 			Atom a1 = new Atom(this);
 			Atom a2 = new Atom(a);
+			
 			for(int i = 0 ; i < a1.getArgs().size() ; i++)
-			{			
+			{
+				for(int j = i+1 ; j < a1.getArgs().size() ; j++)
+				{
+					if(a1.getArgI(i).equalsT(a1.getArgI(j)))
+					{
+						a1.setArgI(j, a1.getArgI(i));
+					}
+				}
+			}
+
+			for(int i = 0 ; i < a2.getArgs().size() ; i++)
+			{
+				for(int j = i+1 ; j < a2.getArgs().size() ; j++)
+				{
+					if(a2.getArgI(i).equalsT(a2.getArgI(j)))
+					{
+						a2.setArgI(j, a2.getArgI(i));
+					}
+				}
+			}
+			
+			System.out.println(a1);
+			System.out.println(a2);
+			
+			
+			for(int i = 0 ; i < a1.getArgs().size() ; i++)
+			{	
 				System.out.println(a1);
 				System.out.println(a2);
+				
 				if(a1.getArgI(i).isConstant() && a2.getArgI(i).isConstant())
 				{
 					if(!a1.getArgI(i).equalsT(a2.getArgI(i)))
@@ -91,25 +119,11 @@ public class Atom
 				{
 					if(a1.getArgI(i).isConstant())
 					{
-						for(Term t : a2.getArgs())
-						{
-							if(t.equalsT(a2.getArgI(i)))
-							{
-								t = a2.getArgI(i);
-							}
-						}
-						a2.getArgI(i).setLabel(a2.getArgI(i).getLabel());
+						a2.getArgI(i).setLabel(a1.getArgI(i).getLabel());
 					}
 					else if(a2.getArgI(i).isConstant())
 					{
-						for(Term t : a1.getArgs())
-						{
-							if(t.equalsT(a1.getArgI(i)))
-							{
-								t = a1.getArgI(i);
-							}
-						}
-						a1.getArgI(i).setLabel(a2.getArgI(i).getLabel());
+						a1.getArgI(i).setLabel(a2.getArgI(i).getLabel());					
 					}
 					else
 					{
@@ -117,10 +131,9 @@ public class Atom
 						{
 							if(t.equalsT(a1.getArgI(i)))
 							{
-								t = a1.getArgI(i);
+								a2.setArgI(i, a1.getArgI(i));
 							}
 						}
-						a1.getArgI(i).setLabel(a2.getArgI(i).getLabel());
 					}
 				}
 			}
