@@ -11,7 +11,7 @@ public class Homomorphismes
 	protected ArrayList<Term> variables;
 	private FactBase A1;
 	private FactBase A2;
-	private ArrayList<CoupleTerms> affectations;
+	private ArrayList<ArrayList<CoupleTerms>> affectations;
 	
 	public Homomorphismes(String s) throws IOException
 	{
@@ -24,7 +24,7 @@ public class Homomorphismes
 		lecturefichier.close();
 		System.out.println("Fichier ferme");
 		
-		affectations = new ArrayList<CoupleTerms>();
+		affectations = new ArrayList<ArrayList<CoupleTerms>>();
 		
 		this.constants = A2.getTerms();
 		this.variables = new ArrayList<Term>();
@@ -47,15 +47,17 @@ public class Homomorphismes
 			{
 				if(a.getPredicate().equals(aa.getPredicate()))
 				{
+					ArrayList<CoupleTerms> aff = new ArrayList<CoupleTerms>();
 					for(int i=0; i< a.getArgs().size(); i++)
 					{
 						Term t = a.getArgI(i);
 						if(t.isVariable())
 						{
 							CoupleTerms ct = new CoupleTerms(t,aa.getArgI(i));
-							affectations.add(ct);// TODO faire en sorte de pas rajouter de doublons
+							aff.add(ct);// TODO faire en sorte de pas rajouter de doublons
 						}
 					}
+					affectations.add(aff);
 				}				
 			}
 		}
@@ -82,13 +84,14 @@ public class Homomorphismes
 				Homomorphisme h3 = new Homomorphisme(h);
 				CoupleTerms couple = new CoupleTerms(variables.get(var),constants.get(constant));
 				h3.addCouples(couple);
-				if(h3.isHomomorphismePartiel(affectations))
-				{
-					if(backtrackRec(h3,var+1,0) != false)
-					{
-						return true;
-					}					
-				}
+				System.out.println(h3);
+//				if(h3.isHomomorphismePartiel(affectations))
+//				{
+//					if(backtrackRec(h3,var+1,0) != false)
+//					{
+//						return true;
+//					}					
+//				}
 				backtrackRec(h2,var,constant+1);	
 			}
 			return false;
@@ -127,11 +130,11 @@ public class Homomorphismes
 		this.variables = variables;
 	}
 
-	public ArrayList<CoupleTerms> getAffectations() {
+	public ArrayList<ArrayList<CoupleTerms>> getAffectations() {
 		return affectations;
 	}
 
-	public void setAffectations(ArrayList<CoupleTerms> affectations) {
+	public void setAffectations(ArrayList<ArrayList<CoupleTerms>> affectations) {
 		this.affectations = affectations;
 	}
 	

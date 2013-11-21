@@ -18,26 +18,26 @@ public class Homomorphisme
 			this.couples.add(ct);
 		}
 	}
-	public boolean isHomomorphismePartiel(ArrayList<CoupleTerms> affectations) 
-	{
-		boolean test;
-		for(CoupleTerms ct : couples)
-		{
-			test = false;
-			for(CoupleTerms ct2 : couples)
-			{
-				if(ct.equalsCT(ct2))
-				{
-					test = true;
-				}
-			}
-			if(!test)
-			{
-				return false;
-			}
-		}
-		return true;
-	}
+//	public boolean isHomomorphismePartiel(ArrayList<ArrayList<CoupleTerms>> affectations.get(0)) 
+//	{
+//		boolean test;
+//		for(CoupleTerms ct : couples)
+//		{
+//			test = false;
+//			for(CoupleTerms ct2 : affectations.get(0))
+//			{
+//				if(ct.equalsCT(ct2))
+//				{
+//					test = true;
+//				}
+//			}
+//			if(!test)
+//			{
+//				return false;
+//			}
+//		}
+//		return true;
+//	}
 	
 	public ArrayList<CoupleTerms> getCouples() {
 		return couples;

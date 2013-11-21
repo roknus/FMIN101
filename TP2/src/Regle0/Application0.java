@@ -37,7 +37,7 @@ public class Application0 {
 		Homomorphismes h = new Homomorphismes("homomorphisme.txt");
 		System.out.println(h);
 		System.out.println(h.backtrack());
-//		System.out.println(h.getAffectations());
+		System.out.println(h.getAffectations());
 		
 		
 		
