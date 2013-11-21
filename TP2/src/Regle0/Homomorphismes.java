@@ -11,7 +11,6 @@ public class Homomorphismes
 	protected ArrayList<Term> variables;
 	private FactBase A1;
 	private FactBase A2;
-	private ArrayList<ArrayList<CoupleTerms>> affectations;
 	
 	public Homomorphismes(String s) throws IOException
 	{
@@ -23,8 +22,6 @@ public class Homomorphismes
 		
 		lecturefichier.close();
 		System.out.println("Fichier ferme");
-		
-		affectations = new ArrayList<ArrayList<CoupleTerms>>();
 		
 		this.constants = A2.getTerms();
 		this.variables = new ArrayList<Term>();
@@ -39,38 +36,15 @@ public class Homomorphismes
 		
 	}
 
-//	private void affectations() 
-//	{
-//		for(Atom a : A1.getAtoms())
-//		{
-//			for(Atom aa : A2.getAtoms())
-//			{
-//				if(a.getPredicate().equals(aa.getPredicate()))
-//				{
-//					ArrayList<CoupleTerms> aff = new ArrayList<CoupleTerms>();
-//					for(int i=0; i< a.getArgs().size(); i++)
-//					{
-//						Term t = a.getArgI(i);
-//						if(t.isVariable())
-//						{
-//							CoupleTerms ct = new CoupleTerms(t,aa.getArgI(i));
-//							aff.add(ct);// TODO faire en sorte de pas rajouter de doublons
-//						}
-//					}
-//					affectations.add(aff);
-//				}				
-//			}
-//		}
-//	}
-
 	public boolean backtrack()
 	{
-//		affectations();
+		System.out.println("L'ordre sur les varibles est "+getVariables()+"\n");
+		setOrder(A1.getAtoms());
 		Homomorphisme h = new Homomorphisme();
-		return backtrackRec(h,0,0);	
+		return backtrackRec(h,0,0,0);	
 	}
 	
-	public boolean backtrackRec(Homomorphisme h, int var, int constant)
+	public boolean backtrackRec(Homomorphisme h, int var, int constant, int order)
 	{
 		if (var >= variables.size())
 		{
@@ -85,14 +59,36 @@ public class Homomorphismes
 				CoupleTerms couple = new CoupleTerms(variables.get(var),constants.get(constant));
 				h3.addCouples(couple);
 				System.out.println(h3);
-				if(h3.isHomomorphismePartiel(A1.getAtoms(), A2.getAtoms()))
+				if(h3.isHomomorphismePartiel(A1.getAtoms(), A2.getAtoms(), order))
 				{
-					if(backtrackRec(h3,var+1,0) == true) return true;
+					if(backtrackRec(h3,var+1,0,order+1))
+					{					
+						return true;
+					}
 				}
-				System.out.println(" ---- ");
-				return backtrackRec(h2,var,constant+1);
+				if(backtrackRec(h2,var,constant+1,order))
+				{
+					return true;
+				}
 			}
 			return false;
+		}
+	}
+	
+	public void setOrder(ArrayList<Atom> atoms)
+	{
+		for(int i = 0; i < variables.size(); i++)
+		{
+			for(Atom a : atoms)
+			{
+				for(Term t : a.getArgs())
+				{
+					if(t.isVariable() && t.getLabel().equals(variables.get(i).getLabel()))
+					{
+						a.setOrder(i);
+					}
+				}
+			}
 		}
 	}
 	
@@ -126,14 +122,5 @@ public class Homomorphismes
 
 	public void setVariables(ArrayList<Term> variables) {
 		this.variables = variables;
-	}
-
-	public ArrayList<ArrayList<CoupleTerms>> getAffectations() {
-		return affectations;
-	}
-
-	public void setAffectations(ArrayList<ArrayList<CoupleTerms>> affectations) {
-		this.affectations = affectations;
-	}
-	
+	}	
 }

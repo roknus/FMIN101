@@ -5,9 +5,11 @@ public class Atom
 {
 	private String predicate; // le predicat (ou le symbole propositionnel) de l'atome
 	private ArrayList<Term> args; //la liste de termes de cet atome (vide si il s'agit d'un atome reduit a un symbole propositionnel)
-		
+	private int order;	
+	
 	public Atom(Atom a)
 	{
+		this.setOrder(0);
 		this.predicate = a.getPredicate();
 		args = new ArrayList<Term>();
 		for(Term t : a.getArgs())
@@ -237,6 +239,14 @@ public class Atom
 	}
 	
 	
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
+	}
+
 	/**
 	 * Retourne la chaine de caracteres de cet atome
 	 * @return la chaine decrivant l'atome (suivant l'ecriture logique habituelle)

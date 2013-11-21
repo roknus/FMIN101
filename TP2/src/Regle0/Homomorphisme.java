@@ -18,56 +18,29 @@ public class Homomorphisme
 			this.couples.add(ct);
 		}
 	}
-	
-//	public boolean isHomomorphismePartiel(ArrayList<ArrayList<CoupleTerms>> aff) 
-//	{
-//		boolean test;
-//		for(ArrayList<CoupleTerms> af : aff)
-//		{
-//			test = false;
-//			for(CoupleTerms cp : couples)
-//			{
-//				test = false;
-//				for(CoupleTerms ct : af)
-//				{
-//					if(cp.equalsCT(ct))
-//					{
-//						test = true;
-//						break;
-//					}					
-//				}
-//				if(!test)
-//				{
-//					break;
-//				}
-//			}
-//			if(test)
-//			{
-//				return true;
-//			}
-//		}
-//		return false;
-//	}
 
-	public boolean isHomomorphismePartiel(ArrayList<Atom> atoms, ArrayList<Atom> atoms2) 
+	public boolean isHomomorphismePartiel(ArrayList<Atom> atoms, ArrayList<Atom> atoms2, int order) 
 	{
-		boolean test;
+		boolean Atomfound;
 		for(Atom a : atoms)
 		{
-			test = false;
-			Atom a2 = new Atom(a);
-			instanciation(a2);
-			for(Atom aa : atoms2)
+			if(a.getOrder() >= order)
 			{
-				if(a2.equalsAConstant(aa))
+				Atomfound = false;
+				Atom a2 = new Atom(a);
+				instanciation(a2);
+				for(Atom aa : atoms2)
 				{
-					test = true;
-					break;
+					if(a2.equalsAConstant(aa))
+					{
+						Atomfound = true;
+						break;
+					}
 				}
-			}
-			if(!test)
-			{
-				return false;
+				if(!Atomfound)
+				{
+					return false;
+				}
 			}
 		}
 		return true;

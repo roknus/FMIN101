@@ -1,0 +1,109 @@
+package Regle0;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class Homomorphismes 
+{
+	protected ArrayList<Term> constants;
+	protected ArrayList<Term> variables;
+	private FactBase A1;
+	private FactBase A2;
+	
+	public Homomorphismes(String s) throws IOException
+	{
+		BufferedReader lecturefichier = new BufferedReader(new FileReader(s));
+		System.out.println("lecture du fichier "+s);
+
+		A1 = new FactBase(lecturefichier.readLine());
+		A2 = new FactBase(lecturefichier.readLine());
+		
+		lecturefichier.close();
+		System.out.println("Fichier ferme");
+		
+		this.constants = A2.getTerms();
+		this.variables = new ArrayList<Term>();
+		
+		for(Term v : A1.getTerms())
+		{
+			if(v.isVariable())
+			{
+				variables.add(new Term(v.getLabel(),v.isConstant()));
+			}
+		}
+		
+	}
+
+	public boolean backtrack()
+	{
+		Homomorphisme h = new Homomorphisme();
+		return backtrackRec(h,0,0);	
+	}
+	
+	public boolean backtrackRec(Homomorphisme h, int var, int constant)
+	{
+		if (var >= variables.size())
+		{
+			return true;
+		}
+		else
+		{
+			if(constant < constants.size())
+			{
+				Homomorphisme h2 = new Homomorphisme(h);
+				Homomorphisme h3 = new Homomorphisme(h);
+				CoupleTerms couple = new CoupleTerms(variables.get(var),constants.get(constant));
+				h3.addCouples(couple);
+				System.out.println(h3);
+				if(h3.isHomomorphismePartiel(A1.getAtoms(), A2.getAtoms()))
+				{
+					if(backtrackRec(h3,var+1,0))
+					{
+						System.out.println("success");						
+						return true;
+					}
+				}
+				if(backtrackRec(h2,var,constant+1))
+				{
+					System.out.println("success");
+					return true
+				}
+			}
+			return false;
+		}
+	}
+	
+	public FactBase getA2() {
+		return A2;
+	}
+	public void setA2(FactBase a2) {
+		A2 = a2;
+	}
+	public FactBase getA1() {
+		return A1;
+	}
+	public void setA1(FactBase a1) {
+		A1 = a1;
+	}
+	public String toString(){
+		return A1.toString()+"\n"+A2.toString();
+	}
+
+	public ArrayList<Term> getConstants() {
+		return constants;
+	}
+
+	public void setConstants(ArrayList<Term> constants) {
+		this.constants = constants;
+	}
+
+	public ArrayList<Term> getVariables() {
+		return variables;
+	}
+
+	public void setVariables(ArrayList<Term> variables) {
+		this.variables = variables;
+	}	
+}
