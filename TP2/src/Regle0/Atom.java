@@ -12,7 +12,7 @@ public class Atom
 		args = new ArrayList<Term>();
 		for(Term t : a.getArgs())
 		{
-			args.add(t);
+			args.add(new Term(t.getLabel(),t.isConstant()));
 		}
 	}
 	
@@ -227,6 +227,15 @@ public class Atom
 			if (!args.get(i).equalsT(r.args.get(i))) return false;
 		return true; 
 	}
+	
+	public boolean equalsAConstant(Atom r)
+	{
+		if (!equalsP(r)) return false;
+		for (int i=0; i < args.size(); i++) 
+			if (args.get(i).isConstant() && !args.get(i).equalsT(r.args.get(i))) return false;
+		return true; 
+	}
+	
 	
 	/**
 	 * Retourne la chaine de caracteres de cet atome

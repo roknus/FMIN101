@@ -33,39 +33,39 @@ public class Homomorphismes
 		{
 			if(v.isVariable())
 			{
-				variables.add(v);
+				variables.add(new Term(v.getLabel(),v.isConstant()));
 			}
 		}
 		
 	}
 
-	private void affectations() 
-	{
-		for(Atom a : A1.getAtoms())
-		{
-			for(Atom aa : A2.getAtoms())
-			{
-				if(a.getPredicate().equals(aa.getPredicate()))
-				{
-					ArrayList<CoupleTerms> aff = new ArrayList<CoupleTerms>();
-					for(int i=0; i< a.getArgs().size(); i++)
-					{
-						Term t = a.getArgI(i);
-						if(t.isVariable())
-						{
-							CoupleTerms ct = new CoupleTerms(t,aa.getArgI(i));
-							aff.add(ct);// TODO faire en sorte de pas rajouter de doublons
-						}
-					}
-					affectations.add(aff);
-				}				
-			}
-		}
-	}
+//	private void affectations() 
+//	{
+//		for(Atom a : A1.getAtoms())
+//		{
+//			for(Atom aa : A2.getAtoms())
+//			{
+//				if(a.getPredicate().equals(aa.getPredicate()))
+//				{
+//					ArrayList<CoupleTerms> aff = new ArrayList<CoupleTerms>();
+//					for(int i=0; i< a.getArgs().size(); i++)
+//					{
+//						Term t = a.getArgI(i);
+//						if(t.isVariable())
+//						{
+//							CoupleTerms ct = new CoupleTerms(t,aa.getArgI(i));
+//							aff.add(ct);// TODO faire en sorte de pas rajouter de doublons
+//						}
+//					}
+//					affectations.add(aff);
+//				}				
+//			}
+//		}
+//	}
 
 	public boolean backtrack()
 	{
-		affectations();
+//		affectations();
 		Homomorphisme h = new Homomorphisme();
 		return backtrackRec(h,0,0);	
 	}
@@ -85,14 +85,12 @@ public class Homomorphismes
 				CoupleTerms couple = new CoupleTerms(variables.get(var),constants.get(constant));
 				h3.addCouples(couple);
 				System.out.println(h3);
-//				if(h3.isHomomorphismePartiel(affectations))
-//				{
-//					if(backtrackRec(h3,var+1,0) != false)
-//					{
-//						return true;
-//					}					
-//				}
-				backtrackRec(h2,var,constant+1);	
+				if(h3.isHomomorphismePartiel(A1.getAtoms(), A2.getAtoms()))
+				{
+					if(backtrackRec(h3,var+1,0) == true) return true;
+				}
+				System.out.println(" ---- ");
+				return backtrackRec(h2,var,constant+1);
 			}
 			return false;
 		}

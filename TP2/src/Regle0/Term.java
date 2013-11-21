@@ -15,7 +15,7 @@ public class Term
 		label = n;
 		constant = c;	
 	}
-		
+
 	/**
 	 * Indique si le terme est une constante
 	 * @return vrai si le terme est une constante, faux sinon
@@ -47,6 +47,11 @@ public class Term
 	public void setLabel(String str)
 	{
 		this.label = str;
+	}
+	
+	public void setConstant()
+	{
+		this.constant = true;
 	}
 
 	
