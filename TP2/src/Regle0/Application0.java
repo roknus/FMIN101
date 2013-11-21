@@ -17,22 +17,29 @@ public class Application0 {
 		System.out.println("Base de regles :\n"+br);
 		*/
 		// creation de la base de connaissance
-//		KnowledgeBase kb = new KnowledgeBase("animal.txt");
+//		KnowledgeBase kb = new KnowledgeBase("test.txt");
 //		System.out.println(kb);
 //		kb.FC_Order1();
 //		System.out.println(kb);
-		KnowledgeBase kb = new KnowledgeBase("unification.txt");
-		System.out.println(kb);
-		Atom a1 = new Atom(kb.getRb().getRule(0).getAtomHyp(0));
-		Atom a2 = new Atom(kb.getRb().getRule(1).getAtomHyp(0));
-		if(a1.isUnifiable(a2))
-		{
-			System.out.println("Unifiable");
-		}
-		else
-		{
-			System.out.println("Pas unifiable");
-		}
+//		KnowledgeBase kb = new KnowledgeBase("unification.txt");
+//		System.out.println(kb);
+//		Atom a1 = new Atom(kb.getRb().getRule(0).getAtomHyp(0));
+//		Atom a2 = new Atom(kb.getRb().getRule(1).getAtomHyp(0));
+//		if(a1.isUnifiable(a2))
+//		{
+//			System.out.println("Unifiable");
+//		}
+//		else
+//		{
+//			System.out.println("Pas unifiable");
+//		}
+		
+		Homomorphismes h = new Homomorphismes("homomorphisme.txt");
+		System.out.println(h);
+		System.out.println(h.backtrack());
+//		System.out.println(h.getAffectations());
+		
+		
 		
 	}
 }

@@ -4,9 +4,9 @@ import java.util.*;
 
 public class Substitutions 
 {
-	private ArrayList<Term> constants;
-	private ArrayList<Term> variables;
-	private ArrayList<Substitution> substitutions;
+	protected ArrayList<Term> constants;
+	protected ArrayList<Term> variables;
+	protected ArrayList<Substitution> substitutions;
 	
 	public Substitutions()
 	{
@@ -15,17 +15,17 @@ public class Substitutions
 		this.variables = new ArrayList<Term>();
 	}
 	
-	public Substitutions(ArrayList<Term> constants, ArrayList<Term> variables)
+	public Substitutions(ArrayList<Term> constants, ArrayList<Term> var)
 	{
 		this.substitutions = new ArrayList<Substitution>();
 		this.constants = constants;
-		this.variables = variables;	
+		this.variables = new ArrayList<Term>();
 		
-		for(Term v : variables)
+		for(Term v : var)
 		{
-			if(!v.isVariable())
+			if(v.isVariable())
 			{
-				variables.remove(v);
+				variables.add(v);
 			}
 		}
 	}

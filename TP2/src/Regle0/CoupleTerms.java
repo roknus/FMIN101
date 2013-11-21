@@ -9,6 +9,11 @@ public class CoupleTerms {
 		this.variable = variable;
 		this.constant = constant;
 	}
+	
+	public boolean equalsCT(CoupleTerms ct)
+	{
+		return (ct.getConstant().equalsT(constant) && ct.getVariable().equalsT(variable));
+	}
 
 	public Term getVariable() {
 		return variable;
